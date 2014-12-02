@@ -5,7 +5,7 @@
 *  
 * Description: A Box Office Plugin for WordPress
 * Version: 1.0.0
-* Author: Name of the plugin author
+* Author: Matt Harris
 * Text Domain: box-office 
 * License: GPL2
 */
