@@ -56,18 +56,68 @@ if(!defined("IS_ADMIN")){
 
 //require_once files here
 
-class BOCommon {
-}
-
 class BOffice {
 	
 	public static $version = '1.0.0';
 	
-	public static function init() {
+	public function __construct() {
+		add_action( 'init', array($this, 'bo_tickets_register_post_type') );
+		add_action( 'admin_head', array($this, 'add_menu_icons_styles') );
+        }
+	
+	public static function bo_tickets_register_post_type() {
 		
-		load_plugin_textdomain('boxoffice');
+		$labels = array(
+			'name'               => _x( 'Tickets', 'post type general name', 'boxoffice' ),
+			'singular_name'      => _x( 'Ticket', 'post type singular name', 'boxoffice' ),
+			'menu_name'          => _x( 'Tickets', 'admin menu', 'boxoffice' ),
+			'name_admin_bar'     => _x( 'Ticket', 'add new on admin bar', 'boxoffice' ),
+			'add_new'            => _x( 'Add New', 'ticket', 'boxoffice' ),
+			'add_new_item'       => __( 'Add New Ticket', 'boxoffice' ),
+			'new_item'           => __( 'New Ticket', 'boxoffice' ),
+			'edit_item'          => __( 'Edit Ticket', 'boxoffice' ),
+			'view_item'          => __( 'View Ticket', 'boxoffice' ),
+			'all_items'          => __( 'All Tickets', 'boxoffice' ),
+			'search_items'       => __( 'Search Tickets', 'boxoffice' ),
+			'parent_item_colon'  => __( 'Parent Tickets:', 'boxoffice' ),
+			'not_found'          => __( 'No tickets found.', 'boxoffice' ),
+			'not_found_in_trash' => __( 'No tickets found in Trash.', 'boxoffice' )
+		);
 		
+		$args = array(
+				'labels'             => $labels,
+				'public'             => true,
+				'publicly_queryable' => true,
+				'show_ui'            => true,
+				'show_in_menu'       => true,
+				'query_var'          => true,
+				'rewrite'            => array( 'slug' => 'ticket' ),
+				'capability_type'    => 'post',
+				'has_archive'        => true,
+				'hierarchical'       => false,
+				'menu_position'      => null,
+				'menu_icon'          => '',
+				'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+			);
+
+		
+		$post_type = 'ticket';
+		
+		register_post_type( $post_type, $args );	
 	}
+	
+	public static function add_menu_icons_styles(){
+	?>
+		<style>
+		#adminmenu .menu-icon-ticket div.wp-menu-image:before {
+		  content: "\f323";
+		}
+		</style>
+	<?php
+	}
+	
 }
+
+$BOffice = new BOffice(); 
 
 ?>
