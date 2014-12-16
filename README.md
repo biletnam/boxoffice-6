@@ -1,4 +1,4 @@
-box-office
+boxoffice
 ==========
 
 WP Box Office Plugin
