@@ -90,6 +90,26 @@ class BOffice {
 
 	}
 	
+	/**
+	* Purchase ticket form
+	*/
+	public static function  process_purchase() {
+		if ( ! isset( $_POST['purchase_ticket_nonce'] ) || ! wp_verify_nonce( $_POST['purchase_ticket_nonce'], 'purchase_ticket' ) ) {
+			print 'Sorry, your nonce did not verify.';
+			exit;
+		} else {
+			$title = $_POST['title'];
+			$post = array(
+					'post_title' => $title,
+					'post_status'=> 'publish',
+					'post_type' => 'ticket'
+				);
+			//returns post id
+			$post_id = wp_insert_post( $post );
+			echo 'Thank you. Your ticket id number is: ' . $post_id;
+		}
+	}
+	
 }
 
 $BO = new BOffice();
