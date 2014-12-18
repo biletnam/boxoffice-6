@@ -15,6 +15,15 @@ function purchase_shortcode_function( $atts ) {
 	
 	if($_POST['submit'] === 'submit') {
 		$title = $_POST['title'];
+		//returns post id
+		$post = array(
+				'post_title' => $title,
+				'post_status'=> 'publish',
+				'post_type' => 'ticket'
+			);
+		$post_id = wp_insert_post( $post );
+		
+		echo 'Thank you. Your ticket id number is: ' . $post_id;
 		
 	} else {
 		$html = '<form method="post">';
